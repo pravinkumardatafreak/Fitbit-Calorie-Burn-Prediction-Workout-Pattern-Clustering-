@@ -18,7 +18,9 @@ This project solves two primary challenges in fitness data science:
 - **Languages:** Python (Pandas, NumPy)
 - **Visualization:** Seaborn, Matplotlib
 - **ML Framework:** Scikit-Learn (RandomForestRegressor, KMeans, PCA, StandardScaler)
-- **Research:** Exploratory EML-inspired symbolic regression for "God Function" discovery.
+- **Research:** Exploratory EML-inspired symbolic regression for "God Function" discovery link:
+https://arxiv.org/html/2603.21852v2#:~:text=Here%20we%20show%20that%20the,to%20exact%20closed-form%20expressions./
+.
 
 ## 🧪 Key Insights
 - **The Intensity Acceleration:** Calorie burn does not increase linearly with BPM; it accelerates. The Random Forest successfully mapped this curve.
