@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitbit Metabolic Analytics Engine</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-radial"></div>
+    
+    <header class="app-header">
+        <div class="logo">
+            <span class="icon">🏃‍♂️</span>
+            <h1>Metabolic<span class="highlight">Analytics</span></h1>
+        </div>
+        <p class="subtitle">AI-Agent Powered Calorie Burn Predictor & Workout Clustering</p>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- Input Section -->
+        <section class="card input-card">
+            <h2><span class="section-icon">⚙️</span> Workout Session Details</h2>
+            <form id="workout-form">
+                
+                <!-- Gender and Workout Type -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="workout_type">Workout Type</label>
+                        <select id="workout_type" name="workout_type" required>
+                            <option value="Cardio">Cardio / Running</option>
+                            <option value="HIIT">HIIT (High Intensity)</option>
+                            <option value="Strength">Strength / Weights</option>
+                            <option value="Mixed">Mixed Training</option>
+                            <option value="Yoga">Yoga / Stretching</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Weight and Height Sliders -->
+                <div class="form-row">
+                    <div class="form-group slider-group">
+                        <div class="slider-header">
+                            <label for="weight">Weight (kg)</label>
+                            <span id="weight-val" class="slider-badge">70</span>
+                        </div>
+                        <input type="range" id="weight" name="weight" min="40" max="130" value="70" step="0.5">
+                    </div>
+                    
+                    <div class="form-group slider-group">
+                        <div class="slider-header">
+                            <label for="height">Height (m)</label>
+                            <span id="height-val" class="slider-badge">1.70</span>
+                        </div>
+                        <input type="range" id="height" name="height" min="1.40" max="2.20" value="1.70" step="0.01">
+                    </div>
+                </div>
+
+                <!-- Avg BPM and Duration -->
+                <div class="form-row">
+                    <div class="form-group slider-group">
+                        <div class="slider-header">
+                            <label for="avg_bpm">Average HR (BPM)</label>
+                            <span id="avg_bpm-val" class="slider-badge">130</span>
+                        </div>
+                        <input type="range" id="avg_bpm" name="avg_bpm" min="90" max="190" value="130" step="1">
+                    </div>
+
+                    <div class="form-group slider-group">
+                        <div class="slider-header">
+                            <label for="session_duration">Duration (mins)</label>
+                            <span id="session_duration-val" class="slider-badge">45</span>
+                        </div>
+                        <input type="range" id="session_duration" name="session_duration" min="10" max="180" value="45" step="5">
+                    </div>
+                </div>
+
+                <!-- HR Intensity Slider -->
+                <div class="form-group slider-group full-width">
+                    <div class="slider-header">
+                        <label for="hr_intensity">HR Intensity Ratio</label>
+                        <span id="hr_intensity-val" class="slider-badge">0.65</span>
+                    </div>
+                    <input type="range" id="hr_intensity" name="hr_intensity" min="0.1" max="1.0" value="0.65" step="0.01">
+                    <span class="input-hint">Ratio of active BPM relative to your estimated maximum heart rate.</span>
+                </div>
+
+                <!-- Advanced Metrics Toggle -->
+                <div class="advanced-section">
+                    <button type="button" id="toggle-advanced" class="btn-text">
+                        <span>▶</span> Advanced Physiological Settings
+                    </button>
+                    <div id="advanced-fields" class="hidden">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="resting_bpm">Resting BPM</label>
+                                <input type="number" id="resting_bpm" name="resting_bpm" value="70" min="40" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="fat_percentage">Fat Percentage (%)</label>
+                                <input type="number" id="fat_percentage" name="fat_percentage" value="20" min="3" max="50">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="water_intake">Water Intake (L)</label>
+                                <input type="number" id="water_intake" name="water_intake" value="3.0" step="0.1" min="0.5" max="8.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="workout_frequency">Frequency (days/wk)</label>
+                                <input type="number" id="workout_frequency" name="workout_frequency" value="3" min="1" max="7">
+                            </div>
+                            <div class="form-group">
+                                <label for="experience_level">Exp Level (0-2)</label>
+                                <select id="experience_level" name="experience_level">
+                                    <option value="0">0 (Beginner)</option>
+                                    <option value="1" selected>1 (Intermediate)</option>
+                                    <option value="2">2 (Advanced)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Prediction & Output Section -->
+        <section class="output-panel">
+            
+            <!-- Calorie Prediction Card -->
+            <div class="card result-card calorie-card">
+                <h3>Predicted Calorie Expenditure</h3>
+                <div class="calorie-display">
+                    <span id="calorie-num" class="rolling-num">0</span>
+                    <span class="unit">kcal</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="calorie-progress" class="progress-bar"></div>
+                </div>
+                <p id="calorie-explanation" class="explanation">Adjust sliders to calculate active burn.</p>
+            </div>
+
+            <!-- Metabolic Zone (Clustering) Card -->
+            <div class="card result-card zone-card">
+                <h3>Metabolic Training Zone (PCA & K-Means)</h3>
+                <div class="zone-badge-container">
+                    <div id="zone-badge" class="zone-badge">Pending Input</div>
+                </div>
+                <div class="zone-details">
+                    <p id="zone-description" class="zone-description">Enter session details to analyze metabolic clustering.</p>
+                </div>
+                <div class="physiological-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">Calculated BMI</span>
+                        <span id="bmi-val" class="stat-value">--</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">PCA Coordinate</span>
+                        <span id="pca-coords" class="stat-value">--</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>Built with ⚡ Antigravity 2.0 AI-Agent for Day 1 Portfolio | GUVI Capstone</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

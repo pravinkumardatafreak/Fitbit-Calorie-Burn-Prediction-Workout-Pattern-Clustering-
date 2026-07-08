@@ -1,0 +1,17 @@
+# Machine Learning Artifacts
+*.pkl
+
+# Large datasets
+Fitbit_large_dataset.csv
+Fitbit_large_dataset.parquet
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Local environments
+.env
+.env.local
+.venv/
+env/
+venv/
